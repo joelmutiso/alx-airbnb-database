@@ -1,8 +1,6 @@
-# ALX Airbnb - ER Diagram Requirements
+# ALX Airbnb - ER Diagram
 
 This document outlines the entities, attributes, and relationships for the ALX Airbnb database. This serves as the foundation for the visual ER Diagram.
-
-**Note:** This is a generic model. You *must* adapt this to your project's specific requirements.
 
 ## 1. Entities and Attributes
 
