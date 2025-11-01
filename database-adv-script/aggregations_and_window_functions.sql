@@ -10,9 +10,9 @@ LEFT JOIN -- Use LEFT JOIN to include users with 0 bookings
 GROUP BY
     U.user_id, U.Username -- Group by both ID and Name
 ORDER BY
-    total_bookings DESC; -- Optional: See most active users first
+    total_bookings DESC;
 
--- Window Function (ROW_NUMBER)
+-- Window Functions (ROW_NUMBER and RANK)
 
 /* Layer 1: The CTE to count bookings per property */
 WITH PropertyBookingCounts AS (
@@ -31,8 +31,9 @@ WITH PropertyBookingCounts AS (
 SELECT
     property_name,
     total_bookings,
-    ROW_NUMBER() OVER (ORDER BY total_bookings DESC) AS property_rank
+    ROW_NUMBER() OVER (ORDER BY total_bookings DESC) AS property_row_number,
+    RANK() OVER (ORDER BY total_bookings DESC) AS property_rank
 FROM
     PropertyBookingCounts
 ORDER BY
-    property_rank ASC; -- Optional: Show rank #1 at the top
+    property_rank ASC;
