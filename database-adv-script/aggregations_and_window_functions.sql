@@ -12,7 +12,7 @@ GROUP BY
 ORDER BY
     total_bookings DESC; -- Optional: See most active users first
 
--- Window Function (RANK)
+-- Window Function (ROW_NUMBER)
 
 /* Layer 1: The CTE to count bookings per property */
 WITH PropertyBookingCounts AS (
@@ -31,7 +31,7 @@ WITH PropertyBookingCounts AS (
 SELECT
     property_name,
     total_bookings,
-    RANK() OVER (ORDER BY total_bookings DESC) AS property_rank
+    ROW_NUMBER() OVER (ORDER BY total_bookings DESC) AS property_rank
 FROM
     PropertyBookingCounts
 ORDER BY

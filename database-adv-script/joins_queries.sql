@@ -17,7 +17,9 @@ SELECT
 FROM
     Properties AS P
 LEFT JOIN
-    Reviews AS R ON P.property_id = R.property_id;
+    Reviews AS R ON P.property_id = R.property_id
+ORDER BY
+    P.name;
 
 --FULL OUTER JOIN
 SELECT
