@@ -1,6 +1,23 @@
 /*
+ * =========================================
+ * "Before" Performance Test
+ * =========================================
+ *
+ * We run EXPLAIN ANALYZE on a query *before*
+ * creating the index. This will show a "Seq Scan".
+ */
+
+EXPLAIN ANALYZE
+SELECT * FROM Bookings WHERE user_id = 1;
+
+/*
+ * =========================================
+ * Index Creation
+ * =========================================
+ */
+
+/*
  * === Indexes for Foreign Keys (JOINs) ===
- * This is the most important performance boost for your queries.
  */
 
 -- Index on Bookings table for linking to Users
@@ -18,7 +35,6 @@ CREATE INDEX idx_reviews_user_id ON Reviews(user_id);
 
 /*
  * === Indexes for Common Searches (WHERE) ===
- * This speeds up finding specific records.
  */
 
 -- Index on Users table for searching by username (logins)
@@ -26,3 +42,17 @@ CREATE UNIQUE INDEX idx_users_username ON Users(Username);
 
 -- Index on Properties table for searching by location
 CREATE INDEX idx_properties_location ON Properties(location);
+
+
+/*
+ * =========================================
+ * "After" Performance Test
+ * =========================================
+ *
+ * Now, we run the *same query* again.
+ * This will show a fast "Index Scan" because
+ * it uses the 'idx_bookings_user_id' we just created.
+ */
+
+EXPLAIN ANALYZE
+SELECT * FROM Bookings WHERE user_id = 1;
