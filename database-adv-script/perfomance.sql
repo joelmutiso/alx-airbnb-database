@@ -5,15 +5,15 @@
  * four tables. This wastes I/O, memory, and network bandwidth.
  */
 
--- We add a WHERE clause to simulate a real-world use case
--- for a fair performance test.
+-- We add a complex WHERE clause (with AND) to simulate a
+-- real-world use case for a fair performance test.
 EXPLAIN ANALYZE
 SELECT *
 FROM Bookings AS B
 JOIN Users AS U ON B.user_id = U.user_id
 JOIN Properties AS P ON B.property_id = P.property_id
 JOIN Payments AS Pay ON B.booking_id = Pay.booking_id
-WHERE U.Username = 'Alice';
+WHERE U.Username = 'Alice' AND P.location = 'Malibu';
 
 
 /*
@@ -24,7 +24,7 @@ WHERE U.Username = 'Alice';
  * The query also relies on indexes for fast JOINs and WHERE.
  */
 
--- We use the same WHERE clause for a fair comparison.
+-- We use the same complex WHERE clause for a fair comparison.
 EXPLAIN ANALYZE
 SELECT
     -- Specific columns from Bookings
@@ -44,4 +44,4 @@ FROM Bookings AS B
 JOIN Users AS U ON B.user_id = U.user_id
 JOIN Properties AS P ON B.property_id = P.property_id
 JOIN Payments AS Pay ON B.booking_id = Pay.booking_id
-WHERE U.Username = 'Alice';
+WHERE U.Username = 'Alice' AND P.location = 'Malibu';
